@@ -138,7 +138,7 @@ def shell(title: str, h1: str, body: str, eyebrow: str = EYEBROW) -> str:
 {body}
   <div class="footer">
     <p class="contact">866-CREATIVE &nbsp;|&nbsp; CreativePlanning.com</p>
-    <p class="fine">{APP} is a private application built by Creative Planning Technology for
+    <p class="fine">{APP} is an application built by Creative Planning Technology for
     companies Creative Planning works with. It is not listed on the Intuit App Store.</p>
   </div>
 </div>
@@ -151,7 +151,7 @@ INDEX = shell(
     APP,
     APP,
     f"""
-  <p class="lede">A private connector Creative Planning Technology uses to link a client's
+  <p class="lede">A connector Creative Planning Technology uses to link a client's
   QuickBooks Online or Intuit Enterprise Suite company to the reporting and automation we
   build for that client.</p>
 

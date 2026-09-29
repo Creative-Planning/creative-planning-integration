@@ -1,6 +1,6 @@
 # Creative Planning Integration (public pages)
 
-Static pages for **Creative Planning Integration**, the private Intuit app that Creative Planning
+Static pages for **Creative Planning Integration**, the Intuit app that Creative Planning
 Technology uses to connect a client's QuickBooks Online or Intuit Enterprise Suite company to
 the reporting and automation we build for that client.
 
