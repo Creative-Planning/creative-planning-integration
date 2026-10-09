@@ -62,6 +62,48 @@ If the repo is renamed, the GitHub Pages URL changes and GitHub does not redirec
 Every URL above has to be updated in the Intuit Developer portal, and the redirect URI has to be
 updated in any tooling that starts a connection, before the old URLs stop working for clients.
 
+## Connecting a client company
+
+Use the Production keys from the Intuit Developer portal. The client ID and secret stay in the
+private credential store. The client ID is a placeholder below; do not put either value in this
+repo.
+
+1. In the portal, under the app's Production keys, register this exact redirect URI. Intuit
+   compares it character for character, so no trailing slash and no case changes:
+
+   ```
+   https://creative-planning.github.io/creative-planning-integration/callback.html
+   ```
+
+2. Build the authorize URL. `state` is any random string; generate a new one per connection.
+
+   ```
+   https://appcenter.intuit.com/connect/oauth2
+     ?client_id=<CLIENT_ID>
+     &response_type=code
+     &scope=com.intuit.quickbooks.accounting
+     &redirect_uri=https%3A%2F%2Fcreative-planning.github.io%2Fcreative-planning-integration%2Fcallback.html
+     &state=<RANDOM_STATE>
+   ```
+
+   `com.intuit.quickbooks.accounting` covers journal entries. Add
+   `com.intuit.quickbooks.payment` only if the engagement needs it.
+
+3. Open the URL in a browser. The client signs in to Intuit, picks the company, and authorizes.
+   Intuit redirects to `callback.html`, which shows `code`, `state` and `realmId`. Check that
+   `state` matches the value you sent.
+
+4. Exchange the code within a few minutes. It works once. POST to
+   `https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer` with HTTP Basic auth (client ID
+   and client secret), `Content-Type: application/x-www-form-urlencoded`, and the body
+   `grant_type=authorization_code&code=<CODE>&redirect_uri=<same redirect URI as step 2>`.
+
+5. Store the access token, refresh token and `realmId` in the private tooling for that client.
+
+If Intuit reports a redirect URI error, the URI in the request does not match the one registered
+under the Production keys. Development keys are for sandbox companies only and have their own
+redirect URI list.
+
 ## Editing
 
 The HTML is generated. Edit `build.py`, then:
